@@ -1,0 +1,18 @@
+#!/bin/bash
+
+switch() {
+        echo "Switching to go ${1}"
+        rm -f /usr/lib/go
+        ln -s /usr/lib/go-${1}/go /usr/lib/go
+        go version
+}
+
+if [ -d "/usr/lib/go-${1}" ]; then
+        switch "${1}"
+else
+        curl -o /tmp/go-${1}.tar.gz https://dl.google.com/go/go${1}.linux-amd64.tar.gz
+        mkdir /usr/lib/go-${1}
+        tar -xzf /tmp/go-${1}.tar.gz -C /usr/lib/go-${1}
+        rm /tmp/go-${1}.tar.gz
+        switch "${1}"
+fi
