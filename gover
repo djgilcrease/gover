@@ -4,6 +4,10 @@ switch() {
         echo "Switching to go ${1}"
         rm -f /usr/lib/go
         ln -s /usr/lib/go-${1}/go /usr/lib/go
+        if [ ! -f /usr/bin/go ]; then
+                ln -s /usr/lib/go/bin/go /usr/bin/go
+                ln -s /usr/lib/go/bin/gofmt /usr/bin/gofmt
+        fi
         go version
 }
 
